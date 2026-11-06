@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F0A1BF">
+  <title>Для Женечки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Nunito:wght@400;600;800&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Окно при входе -->
+  <div class="gate" id="gate">
+    <div class="card gate-card">
+      <div class="big-heart">💗</div>
+      <h2 id="popupTitle"></h2>
+      <p class="text" id="popupText"></p>
+      <button type="button" id="openBtn">Открыть мой подарок 💌</button>
+    </div>
+  </div>
+
+  <main>
+    <header class="hero">
+      <div class="big-heart">❤️</div>
+      <h1>Для моей любимой Жени</h1>
+      <p class="sub">Маленький сайт для самой особенной девушки 💗</p>
+      <span class="daytag" id="daytag"></span>
+    </header>
+
+    <section class="card">
+      <h2 id="helloTitle"></h2>
+      <p class="text" id="helloText"></p>
+    </section>
+
+    <section class="card">
+      <h2>Нажимай на кнопочки 🥰</h2>
+      <div class="btns" id="btns">
+        <button type="button" data-k="letter" aria-pressed="false">💌 Моё письмо</button>
+        <button type="button" data-k="compliment" aria-pressed="false">🌹 Комплимент</button>
+        <button type="button" data-k="surprise" aria-pressed="false">🎁 Сюрприз</button>
+        <button type="button" data-k="hug" aria-pressed="false">🫂 Обнимашки</button>
+      </div>
+      <div class="reveal" id="reveal" aria-live="polite">
+        <span class="rb">Выбери любую кнопку 💗</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 id="secretTitle"></h2>
+      <p class="text" id="secretSub"></p>
+      <button type="button" id="secretBtn">❤️ Нажми на меня ❤️</button>
+      <div id="secretBox" class="secret-box" aria-live="polite"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="remTitle"></h2>
+      <p class="text" id="remText"></p>
+      <div class="flowers" aria-hidden="true">🌷💗🌷</div>
+    </section>
+
+    <footer id="sign"></footer>
+  </main>
+
+  <script src="texts.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

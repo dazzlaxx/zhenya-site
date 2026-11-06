@@ -1,0 +1,204 @@
+/* ============ ЦВЕТА И ШРИФТЫ ============ */
+:root {
+  --rose: #F0A1BF;            
+  --bg: #FCE3EE;
+  --bg-glow: #F0A1BF88;
+  --card: #FFF5F9;
+  --card-line: #F0A1BF77;
+  --ink: #5B2140;
+  --ink-soft: #7E3F5E;
+  --btn: #BE3F73;
+  --btn-ink: #FFFFFF;
+  --btn-hover: #A83366;
+  --soft-fill: #FBDDE9;
+  --shadow: 0 10px 30px #BE3F7326;
+  --veil: #F7C9DBEB;
+  --font-display: "Marck Script", "Segoe Script", cursive;
+  --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #261019; --bg-glow: #F0A1BF2E; --card: #3A1E2D; --card-line: #F0A1BF40;
+    --ink: #FCE7F0; --ink-soft: #F2C5D8; --btn: #F0A1BF; --btn-ink: #3A1022;
+    --btn-hover: #F7B8D0; --soft-fill: #4A2538; --shadow: 0 10px 30px #00000066;
+    --veil: #261019EB; color-scheme: dark;
+  }
+}
+
+/* ============ ОСНОВА ============ */
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  background: radial-gradient(120% 60% at 50% 0%, var(--bg-glow), transparent 70%) var(--bg);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  padding-top: max(28px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(44px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+body.locked { overflow: hidden; }
+main { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; position: relative; z-index: 1; }
+h1, h2 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+
+/* ============ ШАПКА ============ */
+.hero { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 10px; padding-top: 8px; }
+.big-heart { font-size: 64px; line-height: 1; animation: beat 2.2s ease-in-out infinite; }
+.hero h1 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(44px, 12vw, 64px); line-height: 1.05;
+  background: linear-gradient(100deg, var(--ink) 30%, var(--btn) 50%, var(--ink) 70%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: shimmer 6s ease-in-out infinite;
+}
+.sub { color: var(--ink-soft); font-size: 18px; }
+.daytag {
+  margin-top: 4px; padding: 5px 14px; border-radius: 999px;
+  background: var(--card); border: 1px solid var(--card-line);
+  font-size: 13px; letter-spacing: .06em; text-transform: uppercase;
+  font-weight: 800; color: var(--ink-soft);
+}
+
+/* ============ КАРТОЧКИ ============ */
+.card {
+  background: var(--card); border: 1px solid var(--card-line);
+  border-radius: 28px; padding: 26px 22px; box-shadow: var(--shadow);
+  text-align: center; display: flex; flex-direction: column; gap: 14px; align-items: center;
+}
+.card h2 { font-size: 23px; font-weight: 800; line-height: 1.25; }
+.text { color: var(--ink-soft); white-space: pre-line; max-width: 42ch; }
+
+/* Появление карточек при прокрутке (включается из script.js) */
+.js .rv { opacity: 0; transform: translateY(26px) scale(.98); transition: opacity .7s ease, transform .7s ease; }
+.js .rv.in { opacity: 1; transform: none; }
+
+/* ============ КНОПКИ ============ */
+button {
+  font: inherit; font-weight: 800; cursor: pointer; border: 0;
+  background: var(--btn); color: var(--btn-ink);
+  padding: 14px 28px; border-radius: 999px; min-width: 210px;
+  box-shadow: 0 6px 16px #BE3F7333;
+  transition: transform .15s, background .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+button:hover { background: var(--btn-hover); }
+button:active { transform: scale(.95); }
+button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+button[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--card), 0 0 0 6px var(--rose); }
+.btns { display: flex; flex-direction: column; gap: 12px; width: 100%; align-items: center; }
+#secretBtn { animation: wiggle 3.5s ease-in-out infinite; }
+
+/* ============ ОТВЕТ НА КНОПКИ ============ */
+.reveal, .letter {
+  width: 100%; border-radius: 20px; padding: 20px 18px;
+  background: var(--soft-fill);
+  display: flex; flex-direction: column; gap: 8px; justify-content: center; align-items: center;
+  min-height: 110px;
+}
+.reveal .rt { font-weight: 800; font-size: 19px; line-height: 1.3; }
+.reveal .rb { white-space: pre-line; color: var(--ink-soft); max-width: 40ch; }
+.reveal .rt, .reveal .rb { overflow-wrap: anywhere; }
+
+/* У каждой кнопки своя анимация появления */
+.reveal.a-letter     { animation: letterIn .7s cubic-bezier(.2,.9,.3,1.2); }
+.reveal.a-compliment { animation: blossom .8s ease; }
+.reveal.a-surprise   { animation: jackbox .7s cubic-bezier(.3,1.6,.5,1); }
+.reveal.a-hug        { animation: squeeze 1s ease; }
+
+.secret-box { width: 100%; }
+.letter { animation: pop .5s ease; padding: 24px 18px; }
+.letter .spark { font-size: 44px; line-height: 1; animation: beat 1.8s ease-in-out infinite; }
+.letter h3 { margin: 0; font-size: 22px; font-weight: 800; }
+.letter .body { white-space: pre-line; color: var(--ink-soft); max-width: 40ch; min-height: 1.6em; }
+.letter .wish { font-weight: 800; color: var(--ink); opacity: 0; transition: opacity .8s ease; }
+.letter .wish.show { opacity: 1; }
+.caret::after { content: "▍"; margin-left: 1px; animation: blink .8s steps(1) infinite; color: var(--btn); }
+
+.flowers { font-size: 30px; letter-spacing: .4em; animation: sway 3s ease-in-out infinite; }
+footer { text-align: center; color: var(--ink-soft); font-size: 15px; padding-top: 6px; }
+
+/* ============ ОКНО ПРИ ВХОДЕ ============ */
+.gate {
+  position: fixed; inset: 0; z-index: 20;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--veil);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  padding-top: max(16px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-y: auto;                      /* если окно не влезает по высоте (телефон лёжа) */
+  transition: opacity .6s ease;
+}
+.gate-card { margin: auto; }
+.gate.out { opacity: 0; pointer-events: none; }
+.gate-card { max-width: 420px; width: 100%; padding: 34px 24px; animation: gateIn .9s cubic-bezier(.2,.9,.3,1.2); }
+.gate.out .gate-card { animation: gateOut .6s ease forwards; }
+.gate h2 { font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1.1; }
+.gate .big-heart { font-size: 56px; }
+
+/* ============ ЛЕТАЮЩИЕ ЧАСТИЦЫ ============ */
+.p { position: fixed; z-index: 0; pointer-events: none; will-change: transform, opacity; }
+.p-rise  { bottom: -40px; animation: rise linear forwards; }
+.p-fall  { top: -40px;    animation: fall linear forwards; }
+.p-twinkle { animation: twinkle ease-in-out forwards; }
+.p-drift { left: 0; animation: drift linear forwards; }
+.burst { position: fixed; z-index: 30; pointer-events: none; font-size: 26px; animation: burst 1.1s ease-out forwards; }
+
+/* ============ КАДРЫ АНИМАЦИЙ ============ */
+@keyframes beat    { 0%,100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+@keyframes shimmer { 0%,100% { background-position: 100% 0; } 50% { background-position: 0 0; } }
+@keyframes wiggle  { 0%,88%,100% { transform: rotate(0); } 91% { transform: rotate(-3deg); } 94% { transform: rotate(3deg); } 97% { transform: rotate(-2deg); } }
+@keyframes sway    { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes blink   { 50% { opacity: 0; } }
+@keyframes pop     { from { transform: scale(.94); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+@keyframes gateIn  { from { transform: translateY(40px) scale(.9); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes gateOut { to { transform: translateY(-60px) scale(1.08) rotate(-2deg); opacity: 0; } }
+@keyframes letterIn { from { transform: translateY(40px) rotateX(40deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes blossom { 0% { transform: scale(.6); opacity: 0; filter: blur(6px); } 100% { transform: scale(1); opacity: 1; filter: none; } }
+@keyframes jackbox { 0% { transform: scale(.2) rotate(-8deg); } 100% { transform: scale(1) rotate(0); } }
+@keyframes squeeze { 0%,100% { transform: scale(1); } 25% { transform: scale(.92, 1.04); } 50% { transform: scale(1.04, .94); } 75% { transform: scale(.97, 1.02); } }
+@keyframes rise  { to { transform: translate(var(--dx), -115vh) rotate(var(--rot)); opacity: 0; } }
+@keyframes fall  { to { transform: translate(var(--dx), 115vh) rotate(var(--rot)); } }
+@keyframes twinkle { 0%,100% { transform: scale(0) rotate(0); opacity: 0; } 50% { transform: scale(1) rotate(25deg); opacity: .9; } }
+@keyframes drift {
+  0%   { transform: translate(-12vw, 0); }
+  25%  { transform: translate(25vw, -26px); }
+  50%  { transform: translate(55vw, 18px); }
+  75%  { transform: translate(85vw, -22px); }
+  100% { transform: translate(115vw, 0); }
+}
+@keyframes burst { to { transform: translate(var(--bx), var(--by)) scale(1.3) rotate(var(--rot)); opacity: 0; } }
+
+/* Телефон лёжа */
+@media (max-height: 480px) {
+  .gate-card { padding: 20px 20px; gap: 10px; }
+  .gate .big-heart { font-size: 36px; }
+  .gate h2 { font-size: 30px; }
+  .gate .text { font-size: 15px; line-height: 1.45; }
+}
+
+/* Совсем узкие экраны */
+@media (max-width: 360px) {
+  body { font-size: 16px; }
+  .card { padding: 22px 16px; border-radius: 24px; }
+  .gate h2 { font-size: 34px; }
+  .card h2 { font-size: 21px; }
+  button { min-width: 0; width: 100%; max-width: 260px; padding: 13px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .p, .burst { display: none; }
+  .js .rv { opacity: 1; transform: none; }
+}
